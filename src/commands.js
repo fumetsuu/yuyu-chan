@@ -1,9 +1,9 @@
 const sticker = require('./commands/sticker.js')
-const addSticker = require('./commands/addSticker.js')
+const addsticker = require('./commands/addsticker.js')
 
 const commands = {
     "sticker": sticker,
-    "addSticker": addSticker
+    "addsticker": addsticker
 }
 
 module.exports = commands
