@@ -4,11 +4,12 @@
   "description": "yuyu chan bot for discord!",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "nodemon main.js"
   },
   "author": "fumetsu",
   "license": "ISC",
   "dependencies": {
+    "didyoumean": "^1.2.1",
     "discord.js": "^11.3.0",
     "fs": "0.0.1-security",
     "jsonfile": "^4.0.0"
