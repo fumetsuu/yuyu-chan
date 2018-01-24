@@ -28,6 +28,8 @@ module.exports = function emoji(msg) {
             if(categories.includes(argstring.split(" ")[0])) {
                 var category = argstring.split(" ")[0]
                 var emojiCount = 1
+            } else if(!isNaN(parseInt(argstring.split(" ")[0]))) {
+                var emojiCount = parseInt(argstring.split(" ")[0])
             } else {
                 sendInvalid(msg)
                 return;
