@@ -32,7 +32,7 @@ module.exports = function addsticker(msg, args) {
         }
         res.pipe(newStickerFile)
         newStickerFile.on('finish', () => {
-            fs.readFile('./src/stickers/stickerMap.json', (err, data) => {
+            fs.readFile('./src/stickers/stickerMap.json', async (err, data) => {
                 var stickermapjson = JSON.parse(data)
                 console.log(stickermapjson)
                 stickermapjson[stickerName] = `${stickerName}.jpg`
@@ -49,7 +49,7 @@ module.exports = function addsticker(msg, args) {
                     "url": `${stickerURL}`
                     }
                 }
-                msg.channel.send({embed: successEmbed})
+                await msg.channel.send({embed: successEmbed})
                 fs.writeFile('./src/stickers/stickerMap.json', JSON.stringify(stickermapjson), (err) => {
                     if(err) throw err;
                 })

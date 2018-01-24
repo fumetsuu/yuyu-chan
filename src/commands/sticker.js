@@ -18,5 +18,17 @@ module.exports = function sticker(msg) {
         msg.channel.send('', {
             files: [stickerFile]
         })
+    } else {
+        var invalidEmbed = {
+            "title": "Sticker doesn't exist...",
+            "description": `**${stickerName}** is not a valid sticker!`,
+            "color": 6815222,
+            "timestamp": `${new Date().toISOString()}`,
+            "footer": {
+            "icon_url": `${msg.author.avatarURL}`,
+            "text": `invalid sticker request by ${msg.author.username}`
+            }
+        }
+        msg.channel.send({embed: invalidEmbed})
     }
 }
