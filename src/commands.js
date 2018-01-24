@@ -7,7 +7,7 @@ const commands = {
     "sticker": sticker,
     "addsticker": addsticker,
     "removesticker": removesticker,
-    "emoji": emoji
+    "e/": emoji
 }
 
 module.exports = commands

@@ -22,7 +22,7 @@ client.on('message', (msg) => {
 
     //handle emoji trigger without normal prefix
     if(/^e\//.test(msg.content)) {
-        commands['emoji'](msg)
+        commands['e/'](msg)
     }
 
     if(cmdPrefix.test(msg.content)) {
@@ -34,7 +34,12 @@ client.on('message', (msg) => {
         } else if(command == 'help') {
             helpcommand(msg, args)
         } else {
-            msg.channel.send('Invalid Command desu')
+            var invalidEmbed = {
+                "title": "invalid command desu !",
+                "description": "try `y/help` for a list of commands :cowboy:",
+                "color": 6815222
+            }
+            msg.channel.send({embed: invalidEmbed})
         }
 
     }

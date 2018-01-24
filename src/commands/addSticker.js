@@ -5,24 +5,17 @@ const path = require('path')
 module.exports = function addsticker(msg, args) {
     var stickerName = args[0],
         stickerURL = args[1]
+    
+    if(/(?![A-Za-z0-9\_\-])./g.test(stickerName)) {
+        sendInvalid(msg)
+        return;
+    }
 
     request.get(stickerURL, (err, response, content) => {
         if(err) {
             console.log("something went wrong with the addsticker command, sending error embed...")
-            var errorEmbed = {
-                "title": "Couldn't add sticker",
-                "description": "yuyu chan couldn't add the sticker for some reason... \n make sure that the image is a valid url and that the addsticker command is in the form: ```y/addsticker stickername imageurl```",
-                "color": 6815222,
-                "timestamp": "2018-01-23T22:31:44.056Z",
-                "footer": {
-                  "icon_url": `${msg.author.avatarURL}`,
-                  "text": `addsticker failed by ${msg.author.username}`
-                },
-                "thumbnail": {
-                  "url": "http://i.imgur.com/FpKId7M.png"
-                }
-              }
-            msg.channel.send({embed: errorEmbed})
+            sendInvalid(msg)
+            return;
         }
      }).on('response', (res) => {
         if(/\.(gif)$/.test(stickerURL)) {
@@ -56,4 +49,21 @@ module.exports = function addsticker(msg, args) {
             })
         })
      })
+}
+
+function sendInvalid(msg) {
+    var errorEmbed = {
+        "title": "Couldn't add sticker",
+        "description": "yuyu chan couldn't add the sticker for some reason... \n make sure that the image is a valid url and that the addsticker command is in the form: ```y/addsticker stickername imageurl``` \n and that the sticker name is valid",
+        "color": 6815222,
+        "timestamp": "2018-01-23T22:31:44.056Z",
+        "footer": {
+            "icon_url": `${msg.author.avatarURL}`,
+            "text": `addsticker failed by ${msg.author.username}`
+        },
+        "thumbnail": {
+            "url": "http://i.imgur.com/FpKId7M.png"
+        }
+        }
+    msg.channel.send({embed: errorEmbed})
 }

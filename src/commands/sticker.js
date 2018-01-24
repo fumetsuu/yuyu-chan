@@ -7,17 +7,15 @@ module.exports = function sticker(msg) {
     var stickerName = msg.content.split('/')[1]
     if(stickersList.includes(stickerName)) {
         var stickerFile = stickerMap[stickerName]
-        if(/^https?:\/\//.test(stickerFile)) {
+        if(/^https?:\/\//.test(stickerFile)) { //redundant
             if(!/\.(png|jpe?g|gif)$/.test(stickerFile)) {
                 stickerFile = stickerFile+'.jpg'
             }
         } else {
             stickerFile = `${__dirname}/../stickers/${stickerFile}`
         }
-        console.log(`sending ${stickerFile}...`)
-        msg.channel.send('', {
-            files: [stickerFile]
-        })
+    } else if(stickerName == "") {
+        var stickerFile = `${__dirname}/../stickers/${stickerMap[stickersList[Math.floor(Math.random()*stickersList.length)]]}`
     } else {
         var invalidEmbed = {
             "title": "Sticker doesn't exist...",
@@ -30,5 +28,10 @@ module.exports = function sticker(msg) {
             }
         }
         msg.channel.send({embed: invalidEmbed})
+        return;
     }
+    console.log(`sending ${stickerFile}...`)
+    msg.channel.send('', {
+        files: [stickerFile]
+    })
 }
