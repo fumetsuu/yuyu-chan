@@ -29,5 +29,17 @@ module.exports = async function removesticker(msg, args) {
                 })
             })
         }
+    } else {
+        var invalidEmbed = {
+            "title": "Sticker doesn't exist...",
+            "description": `**${stickerName}** could not be deleted because it does not exist!`,
+            "color": 6815222,
+            "timestamp": `${new Date().toISOString()}`,
+            "footer": {
+            "icon_url": `${msg.author.avatarURL}`,
+            "text": `invalid sticker delete by ${msg.author.username}`
+            }
+        }
+        msg.channel.send({embed: invalidEmbed})
     }
 }
