@@ -9,6 +9,7 @@
   "author": "fumetsu",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.3.0",
     "didyoumean": "^1.2.1",
     "discord.js": "^11.3.0",
     "fs": "0.0.1-security",
