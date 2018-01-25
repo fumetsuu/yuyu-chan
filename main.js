@@ -3,9 +3,15 @@ const client = new Discord.Client()
 const fs = require('fs')
 const jsonfile = require('jsonfile')
 const cmdPrefix = /^y\//
+const logger = require('./src/logger.js')
 
 client.on('ready', () => {
 	console.log('準備OK!')
+	logger.info('', '')
+	logger.err('', '')
+	logger.warn('', '')
+	logger.success('', '')
+	logger.data('', '')
 })
 
 var config = jsonfile.readFileSync('conf.json')

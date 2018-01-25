@@ -1,0 +1,7 @@
+{
+	"append": true,
+	"watch": true,
+	"script": "main.js",
+	"sourceDir": "./",
+	"outFile": "./logs.log"
+}
