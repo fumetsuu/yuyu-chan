@@ -6,7 +6,7 @@ const cmdPrefix = /^y\//
 const logger = require('./src/logger.js')
 
 client.on('ready', () => {
-	console.log('準備OK!')
+	logger.log('準備OK!')
 	logger.info('', '')
 	logger.err('', '')
 	logger.warn('', '')
@@ -33,7 +33,7 @@ client.on('message', msg => {
 	if (cmdPrefix.test(msg.content)) {
 		var command = msg.content.split('/')[1].split(' ')[0]
 		var args = msg.content.split(' ').slice(1)
-		console.log(`cmd: ${command}   |    args: ${args}`)
+		logger.data('user command', `cmd: ${command} | args: ${args}`)
 		if (commandsList.includes(command)) {
 			commands[command](msg, args)
 		} else if (command == 'help') {

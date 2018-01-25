@@ -3,11 +3,15 @@ const log = console.log
 
 const logger = {
 	log: logContent => {
-		log(logContent)
+		log(
+			chalk.white(
+				`${new Date().toLocaleTimeString()} - log |:    ${logContent}`
+			)
+		)
 	},
 	info: (logTag, logContent) => {
 		log(
-			chalk.bgCyan(
+			chalk.bgCyan.black(
 				`${new Date().toLocaleTimeString()} - info | ${logTag}`
 			),
 			chalk.white(`:   ${logContent}`)
@@ -18,7 +22,7 @@ const logger = {
 			chalk.bgYellow.black(
 				`${new Date().toLocaleTimeString()} - warning | ${logTag}`
 			),
-			chalk.white(`:      ${logContent}`)
+			chalk.white(`:    ${logContent}`)
 		)
 	},
 	err: (logTag, logContent) => {
@@ -26,7 +30,7 @@ const logger = {
 			chalk.bgRed(
 				`${new Date().toLocaleTimeString()} - ERROR | ${logTag}`
 			),
-			chalk.red(`:     ${logContent}`)
+			chalk.red(`:    ${logContent}`)
 		)
 	},
 	success: (logTag, logContent) => {
@@ -34,7 +38,7 @@ const logger = {
 			chalk.bgGreen.black(
 				`${new Date().toLocaleTimeString()} - success | ${logTag}`
 			),
-			chalk.white(`:   ${logContent}`)
+			chalk.white(`:    ${logContent}`)
 		)
 	},
 	data: (logTag, logContent) => {
