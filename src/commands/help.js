@@ -5,11 +5,7 @@ const commandsHelp = require('../commandsHelp.js')
 const logger = require('../logger.js')
 
 module.exports = function help(msg, args) {
-	//further commands help
-	if (commandsList.includes(args[0])) {
-		logger.info('extra help', 'getting more help for command' + args[0])
-		commandsHelp[args[0]](msg)
-	} else {
+	if (!args[0]) {
 		commandsList.unshift('help')
 		var availableCommands = '`' + commandsList.join('` `') + '`'
 		var helpEmbed = {
@@ -24,9 +20,29 @@ module.exports = function help(msg, args) {
 				{
 					name: 'example:',
 					value: '`y/addsticker umaru http://anime.com/umaru.png` then `s/umaru`'
+				},
+				{
+					name: 'specific command help',
+					value: 'get more info about a specific command: `y/help <commandname>`'
 				}
 			]
 		}
 		msg.channel.send({ embed: helpEmbed })
+		return
+	}
+	if (commandsList.includes(args[0]) && args[0] != 'help') {
+		logger.info('extra help', 'getting more help for command' + args[0])
+		commandsHelp[args[0]](msg)
+	} else if (args[0] == 'help') {
+		msg.channel.send('meta')
+		return
+	} else {
+		var invalidEmbed = {
+			title: `invalid command`,
+			description: "that command doesn't exist so you can't get help for it ...",
+			color: 6815222
+		}
+		msg.channel.send({ embed: invalidEmbed })
+		return
 	}
 }

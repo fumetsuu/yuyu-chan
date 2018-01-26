@@ -1,36 +1,18 @@
-const unique = require('array-unique')
-const upper = require('upper-case')
-const jsonfile = require('jsonfile')
-const reactsData = jsonfile.readFileSync('./src/data/reacts.json')
-const emojiKeys = Object.keys(reactsData)
-
-module.exports = function reactions(msg, args) {
-	//for now, the first arg is just a string of reacts, no spaces allowed
-	var reactString = upper(args.join(''))
-	var reactEmojis = []
-	for (var i = 0; i < reactString.length; i++) {
-		if (emojiKeys.includes(reactString[i])) {
-			reactEmojis.push(reactsData[reactString[i]])
-		}
-	}
-	unique(reactEmojis)
-	msg.channel
-		.fetchMessages({ limit: 2 })
-		.then(messages => {
-			var msgtoreactto = messages.array()[1]
-			var i = 0
-			reactSync(msgtoreactto, reactEmojis, i)
-		})
-		.catch(console.error)
-}
-
-function reactSync(msg, reactemojiArray, i) {
-	if (reactemojiArray[i]) {
-		msg.react(reactemojiArray[i]).then(msgReaction => {
-			if (msgReaction.me) {
-				i++
-				reactSync(msg, reactemojiArray, i)
+module.exports = function reactionsHelp(msg) {
+	var helpEmbed = {
+		title: `y/react <string>`,
+		description: 'reacts to the most recently sent message with the letters in the given string \n currently available react keys: `[A-Z0-9#!?]`',
+		fields: [
+			{
+				name: 'example',
+				value: 'y/react abc123'
+			},
+			{
+				name: 'note',
+				value: 'each key can only be used once in a reaction (i.e. `y/react aab` only reacts with 🇦 🇧'
 			}
-		})
+		],
+		color: 6815222
 	}
+	msg.channel.send({ embed: helpEmbed })
 }

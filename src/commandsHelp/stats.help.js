@@ -1,11 +1,14 @@
-const logger = require('../logger.js')
-
-module.exports = function stats(msg, args) {
-	msg.channel.fetchMessages({ limit: 100 }).then(messages => {
-		var msgsArray = messages.array()
-		msgsArray.forEach(el => {
-			logger.data('msg author', el.author.username)
-		})
-	})
+module.exports = function statsHelp(msg) {
+	var helpEmbed = {
+		title: `y/stats`,
+		description: 'nothing yet',
+		fields: [
+			{
+				name: 'example',
+				value: 'oh.'
+			}
+		],
+		color: 6815222
+	}
+	msg.channel.send({ embed: helpEmbed })
 }
-//not sure what to do with this atm
