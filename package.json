@@ -12,12 +12,14 @@
 	"dependencies": {
 		"array-unique": "^0.3.2",
 		"chalk": "^2.3.0",
+		"cheerio": "^1.0.0-rc.2",
 		"didyoumean": "^1.2.1",
 		"discord.js": "^11.3.0",
 		"forever": "^0.15.3",
 		"fs": "0.0.1-security",
 		"googleapis": "^25.0.0",
 		"jsonfile": "^4.0.0",
+		"node-cache": "^4.1.1",
 		"node-emoji": "^1.8.1",
 		"request": "^2.83.0",
 		"upper-case": "^1.1.3"

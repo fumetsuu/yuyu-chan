@@ -9,6 +9,7 @@ const yt = require('./commands/yt.js')
 const reactions = require('./commands/reactions.js')
 const stats = require('./commands/stats.js')
 const large = require('./commands/large.js')
+const anime = require('./commands/anime.js')
 
 const commands = {
 	sticker: sticker,
@@ -21,7 +22,8 @@ const commands = {
 	yt: yt,
 	react: reactions,
 	stats: stats,
-	large: large
+	large: large,
+	anime: anime
 }
 
 module.exports = commands
