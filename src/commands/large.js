@@ -28,5 +28,5 @@ module.exports = function large(msg, args) {
 		return
 	}
 	msg.delete()
-	msg.channel.send(largeString)
+	msg.channel.send(`\`${msg.author.username}\` ${largeString}`)
 }

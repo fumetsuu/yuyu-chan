@@ -6,7 +6,7 @@ const emojiKeys = Object.keys(reactsData)
 
 module.exports = function reactions(msg, args) {
 	//for now, the first arg is just a string of reacts, no spaces allowed
-	var reactString = upper(args[0])
+	var reactString = upper(args.join(''))
 	var reactEmojis = []
 	for (var i = 0; i < reactString.length; i++) {
 		if (emojiKeys.includes(reactString[i])) {
