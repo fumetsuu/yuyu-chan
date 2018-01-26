@@ -3,7 +3,7 @@ const stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
 const stickerNames = Object.keys(stickerMap)
 
 module.exports = function stickerslist(msg) {
-	var stickersList = '`' + stickerNames.join('`\n`') + '`'
+	var stickersList = '`' + stickerNames.join('` `') + '`'
 	var listEmbed = {
 		title: 'Stickers List',
 		description: `${stickersList}`,

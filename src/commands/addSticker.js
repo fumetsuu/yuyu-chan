@@ -30,7 +30,6 @@ module.exports = function addsticker(msg, args) {
 			newStickerFile.on('finish', () => {
 				fs.readFile('./src/stickers/stickerMap.json', async (err, data) => {
 					var stickermapjson = JSON.parse(data)
-					console.log(stickermapjson)
 					stickermapjson[stickerName] = `${stickerName}.${filext}`
 					var successEmbed = {
 						title: 'New Sticker Added!',
