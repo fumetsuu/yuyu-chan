@@ -6,6 +6,7 @@ const emoji = require('./commands/emoji.js')
 const numbersToLetters = require('./commands/numbersToLetters.js')
 const lettersToNumbers = require('./commands/lettersToNumbers.js')
 const yt = require('./commands/yt.js')
+const reactions = require('./commands/reactions.js')
 
 const commands = {
 	sticker: sticker,
@@ -15,7 +16,8 @@ const commands = {
 	'e/': emoji,
 	ntl: numbersToLetters,
 	ltn: lettersToNumbers,
-	yt: yt
+	yt: yt,
+	react: reactions
 }
 
 module.exports = commands

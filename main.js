@@ -12,8 +12,15 @@ client.on('ready', () => {
 	logger.warn('', '')
 	logger.success('', '')
 	logger.data('', '')
+	client.user.setPresence({
+		game: {
+			name: 'anime',
+			type: 'WATCHING'
+		}
+	})
 })
 
+//handle message and commands
 var config = jsonfile.readFileSync('conf.json')
 client.login(config.token)
 const helpcommand = require('./src/commands/help.js')
