@@ -17,7 +17,6 @@ module.exports = function reactions(msg, args) {
 	msg.channel
 		.fetchMessages({ limit: 2 })
 		.then(messages => {
-			console.log(reactEmojis)
 			var msgtoreactto = messages.array()[1]
 			var i = 0
 			reactSync(msgtoreactto, reactEmojis, i)

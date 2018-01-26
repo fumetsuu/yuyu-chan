@@ -7,11 +7,11 @@ const logger = require('./src/logger.js')
 
 client.on('ready', () => {
 	logger.log('準備OK!')
-	logger.info('', '')
-	logger.err('', '')
-	logger.warn('', '')
-	logger.success('', '')
-	logger.data('', '')
+	// logger.info('', '')
+	// logger.err('', '')
+	// logger.warn('', '')
+	// logger.success('', '')
+	// logger.data('', '')
 	client.user.setPresence({
 		game: {
 			name: 'anime',
