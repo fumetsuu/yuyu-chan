@@ -8,7 +8,7 @@ module.exports = function stickerslist(msg) {
 		title: 'Stickers List',
 		description: `${stickersList}`,
 		color: 6815222,
-		timestamp: '2018-01-23T22:31:44.056Z',
+		timestamp: `${new Date().toISOString()}`,
 		footer: {
 			icon_url: `${msg.author.avatarURL}`,
 			text: `stickers list requested by ${msg.author.username}`
