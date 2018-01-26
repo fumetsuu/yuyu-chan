@@ -34,7 +34,7 @@ client.on('message', msg => {
 
 	//handle emoji trigger without normal prefix
 	if (/^e\//.test(msg.content)) {
-		commands['e/'](msg)
+		commands['emoji'](msg)
 	}
 
 	if (cmdPrefix.test(msg.content)) {

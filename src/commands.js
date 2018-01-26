@@ -16,7 +16,7 @@ const commands = {
 	addsticker: addsticker,
 	removesticker: removesticker,
 	stickerslist: stickerslist,
-	'e/': emoji,
+	emoji: emoji,
 	ntl: numbersToLetters,
 	ltn: lettersToNumbers,
 	yt: yt,
