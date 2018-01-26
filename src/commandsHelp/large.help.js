@@ -5,7 +5,7 @@ module.exports = function largeHelp(msg) {
 		fields: [
 			{
 				name: 'example',
-				value: '`y/large yuyu` //sends `(username)` 🇾🇺🇾🇺'
+				value: '`y/large yuyu` =>  `(username)` 🇾 🇺 🇾 🇺'
 			}
 		],
 		color: 6815222

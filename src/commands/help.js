@@ -1,12 +1,12 @@
 const path = require('path')
 const commands = require('./../commands.js')
 const commandsList = Object.keys(commands)
+commandsList.unshift('help')
 const commandsHelp = require('../commandsHelp.js')
 const logger = require('../logger.js')
 
 module.exports = function help(msg, args) {
 	if (!args[0]) {
-		commandsList.unshift('help')
 		var availableCommands = '`' + commandsList.join('` `') + '`'
 		var helpEmbed = {
 			title: 'hi im yuyu',
