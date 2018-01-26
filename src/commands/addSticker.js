@@ -13,54 +13,43 @@ module.exports = function addsticker(msg, args) {
 	request
 		.get(stickerURL, (err, response, content) => {
 			if (err) {
-				console.log(
-					'something went wrong with the addsticker command, sending error embed...'
-				)
+				console.log('something went wrong with the addsticker command, sending error embed...')
 				sendInvalid(msg)
 				return
 			}
 		})
 		.on('response', res => {
 			if (/\.(gif)$/.test(stickerURL)) {
-				var newStickerFile = fs.createWriteStream(
-					`./src/stickers/${stickerName}.gif`
-				)
+				var newStickerFile = fs.createWriteStream(`./src/stickers/${stickerName}.gif`)
+				var filext = 'gif'
 			} else {
-				var newStickerFile = fs.createWriteStream(
-					`./src/stickers/${stickerName}.jpg`
-				)
+				var newStickerFile = fs.createWriteStream(`./src/stickers/${stickerName}.jpg`)
+				var filext = 'jpg'
 			}
 			res.pipe(newStickerFile)
 			newStickerFile.on('finish', () => {
-				fs.readFile(
-					'./src/stickers/stickerMap.json',
-					async (err, data) => {
-						var stickermapjson = JSON.parse(data)
-						console.log(stickermapjson)
-						stickermapjson[stickerName] = `${stickerName}.jpg`
-						var successEmbed = {
-							title: 'New Sticker Added!',
-							description: `added sticker **${stickerName}**, it should now be available with **s/${stickerName}**`,
-							color: 6815222,
-							timestamp: `${new Date().toISOString()}`,
-							footer: {
-								icon_url: `${msg.author.avatarURL}`,
-								text: `Sticker added by ${msg.author.username}`
-							},
-							thumbnail: {
-								url: `${stickerURL}`
-							}
+				fs.readFile('./src/stickers/stickerMap.json', async (err, data) => {
+					var stickermapjson = JSON.parse(data)
+					console.log(stickermapjson)
+					stickermapjson[stickerName] = `${stickerName}.${filext}`
+					var successEmbed = {
+						title: 'New Sticker Added!',
+						description: `added sticker **${stickerName}**, it should now be available with **s/${stickerName}**`,
+						color: 6815222,
+						timestamp: `${new Date().toISOString()}`,
+						footer: {
+							icon_url: `${msg.author.avatarURL}`,
+							text: `Sticker added by ${msg.author.username}`
+						},
+						thumbnail: {
+							url: `${stickerURL}`
 						}
-						await msg.channel.send({ embed: successEmbed })
-						fs.writeFile(
-							'./src/stickers/stickerMap.json',
-							JSON.stringify(stickermapjson),
-							err => {
-								if (err) throw err
-							}
-						)
 					}
-				)
+					await msg.channel.send({ embed: successEmbed })
+					fs.writeFile('./src/stickers/stickerMap.json', JSON.stringify(stickermapjson), err => {
+						if (err) throw err
+					})
+				})
 			})
 		})
 }
