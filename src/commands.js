@@ -10,6 +10,7 @@ const reactions = require('./commands/reactions.js')
 const stats = require('./commands/stats.js')
 const large = require('./commands/large.js')
 const anime = require('./commands/anime.js')
+const stickerspreview = require('./commands/stickerspreview.js')
 
 const commands = {
 	sticker: sticker,
@@ -23,7 +24,8 @@ const commands = {
 	react: reactions,
 	stats: stats,
 	large: large,
-	anime: anime
+	anime: anime,
+	stickerspreview: stickerspreview
 }
 
 module.exports = commands

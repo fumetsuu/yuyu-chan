@@ -5,7 +5,7 @@ const path = require('path')
 module.exports = function addsticker(msg, args) {
 	var stickerName = args[0],
 		stickerURL = args[1]
-	if (/(?![A-Za-z0-9\_\-])./g.test(stickerName)) {
+	if (/(?![A-Za-z0-9\_\-])./g.test(stickerName) || /.svg$/.test(stickerURL)) {
 		sendInvalid(msg)
 		return
 	}
