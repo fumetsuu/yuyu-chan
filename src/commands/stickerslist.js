@@ -1,8 +1,8 @@
 const jsonfile = require('jsonfile')
-const stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
-const stickerNames = Object.keys(stickerMap)
 
 module.exports = function stickerslist(msg) {
+	var stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
+	var stickerNames = Object.keys(stickerMap)
 	var stickersList = '`' + stickerNames.join('` `') + '`'
 	var listEmbed = {
 		title: 'Stickers List',

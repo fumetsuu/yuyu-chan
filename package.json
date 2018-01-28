@@ -14,6 +14,7 @@
 		"async": "^2.6.0",
 		"chalk": "^2.3.0",
 		"cheerio": "^1.0.0-rc.2",
+		"clear-require": "^2.0.0",
 		"didyoumean": "^1.2.1",
 		"discord.js": "^11.3.0",
 		"forever": "^0.15.3",

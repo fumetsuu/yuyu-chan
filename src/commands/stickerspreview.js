@@ -1,9 +1,9 @@
 const fs = require('fs')
 const utils = require('../utils.js')
 const logger = require('../logger.js')
-const previewDataPath = './src/stickers/previewData.json'
 
 module.exports = function stickerspreview(msg, args) {
+	var previewDataPath = './src/stickers/previewData.json'
 	logger.info('called', 'trying to call genStickersPreview()')
 	var forceUpdate = false
 	if (args.includes('force=true')) {

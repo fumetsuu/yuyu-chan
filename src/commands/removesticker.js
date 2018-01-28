@@ -1,10 +1,10 @@
 const path = require('path')
 const fs = require('fs')
 const jsonfile = require('jsonfile')
-const stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
-const stickersList = Object.keys(stickerMap)
 
 module.exports = async function removesticker(msg, args) {
+	var stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
+	var stickersList = Object.keys(stickerMap)
 	var stickerName = args[0]
 	if (stickersList.includes(stickerName)) {
 		if (!/^https?:\/\//.test(stickerMap[stickerName])) {

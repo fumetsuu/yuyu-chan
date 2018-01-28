@@ -1,9 +1,10 @@
 const path = require('path')
 const jsonfile = require('jsonfile')
-const stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
-const stickersList = Object.keys(stickerMap)
 
 module.exports = function sticker(msg) {
+	var stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
+	var stickersList = Object.keys(stickerMap)
+	console.log(stickerMap)
 	var stickerName = msg.content.split('/')[1]
 	if (/^y\//.test(msg.content)) {
 		stickerName = msg.content.split(' ')[1]

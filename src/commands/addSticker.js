@@ -20,7 +20,9 @@ module.exports = function addsticker(msg, args) {
 			resizedWidthTemp = args[i].split('=')[1]
 		}
 	}
-	if (Number(resizedWidthTemp) && Number(resizedWidthTemp) <= 800) {
+	if (!resizedWidthTemp) {
+		resizedWidth = false
+	} else if (Number(resizedWidthTemp) && Number(resizedWidthTemp) <= 800) {
 		resizedWidth = Number(resizedWidthTemp)
 	} else {
 		logger.err('width', 'width error')
@@ -73,6 +75,8 @@ module.exports = function addsticker(msg, args) {
 			})
 			.catch(err => {
 				logger.err('add sticker error', err)
+				sendInvalid(msg)
+				return
 			})
 	}
 }

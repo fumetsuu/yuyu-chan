@@ -11,6 +11,7 @@ const stats = require('./commands/stats.js')
 const large = require('./commands/large.js')
 const anime = require('./commands/anime.js')
 const stickerspreview = require('./commands/stickerspreview.js')
+const prune = require('./commands/prune')
 
 const commands = {
 	sticker: sticker,
@@ -25,7 +26,8 @@ const commands = {
 	stats: stats,
 	large: large,
 	anime: anime,
-	stickerspreview: stickerspreview
+	stickerspreview: stickerspreview,
+	prune: prune
 }
 
 module.exports = commands
