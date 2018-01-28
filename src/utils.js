@@ -3,9 +3,10 @@ const path = require('path')
 const Jimp = require('jimp')
 const sizeOf = require('image-size')
 const logger = require('./logger.js')
+const async = require('async')
 
 module.exports = utils = {
-	genStickersPreview: function() {
+	genStickersPreview: function () {
 		const stickerFolderPath = path.join(__dirname, './stickers')
 		fs.readdir(stickerFolderPath, (err, files) => {
 			var start = new Date().getTime()
@@ -19,28 +20,43 @@ module.exports = utils = {
 			var previewTemplate = new Jimp(templateWidth, templateHeight, (err, template) => {
 				template.background(0xf5f5f3ff)
 				var imgPosCounter = 0 //basically act as the index since Jimp.read is async
-				for (var i = 0; i < files.length; i++) {
-					var filePath = path.join(stickerFolderPath, files[i])
-					Jimp.read(filePath, (err, img) => {
-						img.contain(scaledDimensions, scaledDimensions, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
-						var withMargin = margin + scaledDimensions
-						var xPos = imgPosCounter % stickersPerRow
-						var yPos = Math.floor(imgPosCounter / stickersPerRow)
-						var xPixels = margin + withMargin * xPos
-						var yPixels = margin + withMargin * yPos //yPos+1 for space on top
-						Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
-							template.print(font, xPixels + 5, yPixels + scaledDimensions + 2, files[imgPosCounter], 40)
+				var stickerNames = []
+				var filePath //for scope
+				async.until(
+					() => imgPosCounter == files.length,
+					function (next) { //next is important !! :)
+						filePath = path.join(stickerFolderPath, files[imgPosCounter])
+						Jimp.read(filePath, (err, img) => {
+							// console.log(files[imgPosCounter], img, imgPosCounter, template)
+							stickerNames.push(files[imgPosCounter])
+							img.contain(scaledDimensions, scaledDimensions, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
+							var withMargin = margin + scaledDimensions
+							var xPos = imgPosCounter % stickersPerRow
+							var yPos = Math.floor(imgPosCounter / stickersPerRow)
+							var xPixels = margin + withMargin * xPos
+							var yPixels = margin + withMargin * yPos
+							template.composite(img, xPixels, yPixels)
+							//console.log(files[imgPosCounter], imgPosCounter, xPixels, yPixels)
+							imgPosCounter++
+							next()
 						})
-						template.composite(img, xPixels, yPixels)
-						console.log(files[imgPosCounter], imgPosCounter, xPixels, yPixels)
-						imgPosCounter++
-						if (imgPosCounter == files.length) {
+					}, (err, results) => {
+						console.log('heyyy')
+						Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
+							for (var i = 0; i < stickerNames.length; i++) {
+								var withMargin = margin + scaledDimensions
+								var xPos = i % stickersPerRow
+								var yPos = Math.floor(i / stickersPerRow)
+								var xPixels = margin + withMargin * xPos
+								var yPixels = margin + withMargin * yPos
+								template.print(font, xPixels + 5, yPixels + scaledDimensions + 2, stickerNames[i], 40)
+							}
 							previewTemplate.write('./ohhhh.jpg', (err, success) => {
-								console.log(err, success)
+								logger.success('file written', success + ' time taken : ' + (new Date().getTime() - start) + 'ms')
 							})
-						}
-					})
-				}
+						})
+					}
+				)
 			})
 		})
 	}
