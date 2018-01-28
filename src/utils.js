@@ -13,12 +13,19 @@ module.exports = utils = {
 			files = files.filter(f => !/(.gitignore|stickerMap.json)/.test(f))
 			//want to set 50x50 for each file,  30px padding 15 images each row
 			const scaledDimensions = 90
-			const margin = 40
+			const margin = 60
 			const stickersPerRow = 12
 			var templateWidth = (scaledDimensions + margin) * stickersPerRow + margin //extra margin for right
 			var templateHeight = Math.ceil(files.length / stickersPerRow) * (scaledDimensions + margin) + margin //extra margin for bottom
+			var stickerBorder = new Jimp(scaledDimensions, scaledDimensions, 0xffffff00, (err, border) => {
+				const fillBorder = makeIteratorThatFillsWithColor(0x00000022);
+				border.scan(0, 0, scaledDimensions, 1, fillBorder)
+				border.scan(0, scaledDimensions - 1, scaledDimensions, 1, fillBorder)
+				border.scan(0, 0, 1, scaledDimensions, fillBorder)
+				border.scan(scaledDimensions - 1, 0, 1, scaledDimensions, fillBorder)
+			})
 			var previewTemplate = new Jimp(templateWidth, templateHeight, (err, template) => {
-				template.background(0xf5f5f3ff)
+				template.background(0xffffffff)
 				var imgPosCounter = 0 //basically act as the index since Jimp.read is async
 				var stickerNames = []
 				var filePath //for scope
@@ -35,7 +42,9 @@ module.exports = utils = {
 							var yPos = Math.floor(imgPosCounter / stickersPerRow)
 							var xPixels = margin + withMargin * xPos
 							var yPixels = margin + withMargin * yPos
+							//maybe add border here (low level) create border as var Jimp above
 							template.composite(img, xPixels, yPixels)
+							template.composite(stickerBorder, xPixels, yPixels)
 							//console.log(files[imgPosCounter], imgPosCounter, xPixels, yPixels)
 							imgPosCounter++
 							next()
@@ -49,7 +58,7 @@ module.exports = utils = {
 								var yPos = Math.floor(i / stickersPerRow)
 								var xPixels = margin + withMargin * xPos
 								var yPixels = margin + withMargin * yPos
-								template.print(font, xPixels + 5, yPixels + scaledDimensions + 2, stickerNames[i], 40)
+								template.print(font, xPixels + 5, yPixels + scaledDimensions + 2, stickerNames[i])
 							}
 							previewTemplate.write('./ohhhh.jpg', (err, success) => {
 								logger.success('file written', success + ' time taken : ' + (new Date().getTime() - start) + 'ms')
@@ -59,5 +68,11 @@ module.exports = utils = {
 				)
 			})
 		})
+
+		function makeIteratorThatFillsWithColor(color) { //Jimp #202
+			return function (x, y, offset) {
+				this.bitmap.data.writeUInt32BE(color, offset, true);
+			}
+		};
 	}
 }
