@@ -6,7 +6,7 @@ const logger = require('./logger.js')
 const async = require('async')
 
 module.exports = utils = {
-	genStickersPreview: function() {
+	genStickersPreview: function(outPath, cb) {
 		const stickerFolderPath = path.join(__dirname, './stickers/stickerImgs')
 		fs.readdir(stickerFolderPath, (err, files) => {
 			var start = new Date().getTime()
@@ -17,13 +17,13 @@ module.exports = utils = {
 			const stickersPerRow = 12
 			var templateWidth = (scaledDimensions + margin) * stickersPerRow + margin //extra margin for right
 			var templateHeight = Math.ceil(files.length / stickersPerRow) * (scaledDimensions + margin) + margin //extra margin for bottom
-			var stickerBorder = new Jimp(scaledDimensions, scaledDimensions, 0xffffff00, (err, border) => {
-				const fillBorder = makeIteratorThatFillsWithColor(0x000000aa)
-				border.scan(0, 0, scaledDimensions, 1, fillBorder)
-				border.scan(0, scaledDimensions - 1, scaledDimensions, 1, fillBorder)
-				border.scan(0, 0, 1, scaledDimensions, fillBorder)
-				border.scan(scaledDimensions - 1, 0, 1, scaledDimensions, fillBorder)
-			})
+			// var stickerBorder = new Jimp(scaledDimensions, scaledDimensions, 0xffffff00, (err, border) => {
+			// 	const fillBorder = makeIteratorThatFillsWithColor(0x000000aa)
+			// 	border.scan(0, 0, scaledDimensions, 1, fillBorder)
+			// 	border.scan(0, scaledDimensions - 1, scaledDimensions, 1, fillBorder)
+			// 	border.scan(0, 0, 1, scaledDimensions, fillBorder)
+			// 	border.scan(scaledDimensions - 1, 0, 1, scaledDimensions, fillBorder)
+			// })
 			var previewTemplate = new Jimp(templateWidth, templateHeight, (err, template) => {
 				template.background(0xffffffff)
 				var imgPosCounter = 0 //basically act as the index since Jimp.read is async
@@ -45,14 +45,13 @@ module.exports = utils = {
 							var yPixels = margin + withMargin * yPos
 							//maybe add border here (low level) create border as var Jimp above
 							template.composite(img, xPixels, yPixels)
-							template.composite(stickerBorder, xPixels, yPixels)
+							// template.composite(stickerBorder, xPixels, yPixels)
 							//console.log(files[imgPosCounter], imgPosCounter, xPixels, yPixels)
 							imgPosCounter++
 							next()
 						})
 					},
 					(err, results) => {
-						console.log('heyyy')
 						Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
 							for (var i = 0; i < stickerNames.length; i++) {
 								var withMargin = margin + scaledDimensions
@@ -62,8 +61,9 @@ module.exports = utils = {
 								var yPixels = margin + withMargin * yPos
 								template.print(font, xPixels + 5, yPixels + scaledDimensions + 2, stickerNames[i])
 							}
-							previewTemplate.write('./src/stickers/preview.jpg', (err, success) => {
+							previewTemplate.write(outPath, (err, success) => {
 								logger.success('file written', success + ' time taken : ' + (new Date().getTime() - start) + 'ms')
+								cb(err, outPath, files.length) //finished processing, calls cb (cb function passed to genStickersPreview())
 							})
 						})
 					}
