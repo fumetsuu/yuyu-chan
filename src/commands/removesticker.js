@@ -3,12 +3,12 @@ const fs = require('fs')
 const jsonfile = require('jsonfile')
 
 module.exports = async function removesticker(msg, args) {
-	var stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
+	var stickerMap = jsonfile.readFileSync(path.join(__dirname, '../stickers/stickerMap.json'))
 	var stickersList = Object.keys(stickerMap)
 	var stickerName = args[0]
 	if (stickersList.includes(stickerName)) {
 		if (!/^https?:\/\//.test(stickerMap[stickerName])) {
-			var stickerFile = `./src/stickers/stickerImgs/${stickerMap[stickerName]}`
+			var stickerFile = path.join(__dirname, `../stickers/stickerImgs/${stickerMap[stickerName]}`)
 			var successEmbed = {
 				title: 'Sticker Deleted!',
 				description: `deleted sticker **${stickerName}**`,
@@ -24,7 +24,7 @@ module.exports = async function removesticker(msg, args) {
 				var stickermapjson = JSON.parse(data)
 				delete stickermapjson[stickerName]
 				fs.unlinkSync(stickerFile)
-				fs.writeFile('./src/stickers/stickerMap.json', JSON.stringify(stickermapjson), err => {
+				fs.writeFile(path.join(__dirname, '../stickers/stickerMap.json'), JSON.stringify(stickermapjson), err => {
 					if (err) throw err
 				})
 			})

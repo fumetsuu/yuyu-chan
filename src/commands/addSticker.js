@@ -47,7 +47,7 @@ module.exports = function addsticker(msg, args) {
 				}
 			})
 			.on('response', res => {
-				var newStickerFile = fs.createWriteStream(`./src/stickers/stickerImgs/${stickerName}.gif`)
+				var newStickerFile = fs.createWriteStream(path.join(__dirname, `../stickers/stickerImgs/${stickerName}.gif`))
 				var filext = 'gif'
 				res.pipe(newStickerFile)
 				newStickerFile.on('finish', () => {
@@ -57,7 +57,7 @@ module.exports = function addsticker(msg, args) {
 	} else {
 		Jimp.read(stickerURL)
 			.then(stickerImage => {
-				var newStickerFile = `./src/stickers/stickerImgs/${stickerName}.${stickerImage.getExtension()}`
+				var newStickerFile = path.join(__dirname, `../stickers/stickerImgs/${stickerName}.${stickerImage.getExtension()}`)
 				var filext = stickerImage.getExtension()
 				if (resizedWidth) {
 					stickerImage.resize(resizedWidth, Jimp.AUTO, () => {
@@ -100,7 +100,7 @@ function sendInvalid(msg) {
 }
 
 function writeAndSuccess(stickerName, msg, stickerURL, filext) {
-	fs.readFile('./src/stickers/stickerMap.json', (err, data) => {
+	fs.readFile(path.join(__dirname, '../stickers/stickerMap.json'), (err, data) => {
 		var stickermapjson = JSON.parse(data)
 		stickermapjson[stickerName] = `${stickerName}.${filext}`
 		var successEmbed = {
@@ -117,7 +117,7 @@ function writeAndSuccess(stickerName, msg, stickerURL, filext) {
 			}
 		}
 		msg.channel.send({ embed: successEmbed }).then(msg => {
-			fs.writeFile('./src/stickers/stickerMap.json', JSON.stringify(stickermapjson), err => {
+			fs.writeFile(path.join(__dirname, '../stickers/stickerMap.json'), JSON.stringify(stickermapjson), err => {
 				if (err) throw err
 			})
 		})

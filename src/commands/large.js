@@ -1,8 +1,9 @@
+const path = require('path')
 const jsonfile = require('jsonfile')
 const upper = require('upper-case')
-const largeData = jsonfile.readFileSync('./src/data/reacts.json') //uses large emoji which is the same for reactions
+const largeData = jsonfile.readFileSync(path.join(__dirname, '../data/reacts.json')) //uses large emoji which is the same for reactions
 const availableKeys = Object.keys(largeData)
-const logger = require('../logger.js')
+const logger = require(path.join(__dirname, '../logger.js'))
 
 module.exports = function large(msg, args) {
 	//takes the entire string (with spaces included) to output largified

@@ -1,9 +1,10 @@
 const request = require('request')
 const cheerio = require('cheerio')
+const path = require('path')
 const upper = require('upper-case')
 const NodeCache = require('node-cache')
 const nodeCache = new NodeCache()
-const logger = require('../logger.js')
+const logger = require(path.join(__dirname, '../logger.js'))
 
 module.exports = function anime(msg, args) {
 	//if user is asking to sort anime instead of querying a specific anime

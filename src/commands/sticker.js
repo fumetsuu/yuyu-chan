@@ -2,9 +2,8 @@ const path = require('path')
 const jsonfile = require('jsonfile')
 
 module.exports = function sticker(msg) {
-	var stickerMap = jsonfile.readFileSync('./src/stickers/stickerMap.json')
+	var stickerMap = jsonfile.readFileSync(path.join(__dirname, '../stickers/stickerMap.json'))
 	var stickersList = Object.keys(stickerMap)
-	console.log(stickerMap)
 	var stickerName = msg.content.split('/')[1]
 	if (/^y\//.test(msg.content)) {
 		stickerName = msg.content.split(' ')[1]
@@ -17,10 +16,10 @@ module.exports = function sticker(msg) {
 				stickerFile = stickerFile + '.jpg'
 			}
 		} else {
-			stickerFile = `${__dirname}/../stickers/stickerImgs/${stickerFile}`
+			stickerFile = path.join(__dirname, `../stickers/stickerImgs/${stickerFile}`)
 		}
 	} else if (stickerName == '') {
-		var stickerFile = `${__dirname}/../stickers/stickerImgs/${stickerMap[stickersList[Math.floor(Math.random() * stickersList.length)]]}`
+		var stickerFile = path.join(__dirname, `../stickers/stickerImgs/${stickerMap[stickersList[Math.floor(Math.random() * stickersList.length)]]}`)
 	} else {
 		var invalidEmbed = {
 			title: "Sticker doesn't exist...",

@@ -1,9 +1,10 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const fs = require('fs')
+const path = require('path')
 const jsonfile = require('jsonfile')
 const cmdPrefix = /^y\//
-const logger = require('./src/logger.js')
+const logger = require(path.join(__dirname, '/src/logger.js'))
 
 client.on('ready', () => {
 	logger.log('準備OK!')
@@ -23,8 +24,8 @@ client.on('ready', () => {
 //handle message and commands
 var config = jsonfile.readFileSync('conf.json')
 client.login(config.token)
-const helpcommand = require('./src/commands/help.js')
-const commands = require('./src/commands.js')
+const helpcommand = require(path.join(__dirname, '/src/commands/help.js'))
+const commands = require(path.join(__dirname, '/src/commands.js'))
 const commandsList = Object.keys(commands)
 client.on('message', msg => {
 	//handle sticker trigger without normal prefix
@@ -51,7 +52,9 @@ client.on('message', msg => {
 				description: 'try `y/help` for a list of commands :cowboy:',
 				color: 6815222
 			}
-			msg.channel.send({ embed: invalidEmbed })
+			msg.channel.send({
+				embed: invalidEmbed
+			})
 		}
 	}
 })

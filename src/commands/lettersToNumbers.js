@@ -1,5 +1,6 @@
+const path = require('path')
 const jsonfile = require('jsonfile')
-const lettersnum = jsonfile.readFileSync('./src/data/lettersnum.json')
+const lettersnum = jsonfile.readFileSync(path.join(__dirname, '../data/lettersnum.json'))
 const letters = Object.keys(lettersnum)
 
 module.exports = function lettersToNumbers(msg, args) {

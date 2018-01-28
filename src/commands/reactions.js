@@ -1,7 +1,8 @@
+const path = require('path')
 const unique = require('array-unique')
 const upper = require('upper-case')
 const jsonfile = require('jsonfile')
-const reactsData = jsonfile.readFileSync('./src/data/reacts.json')
+const reactsData = jsonfile.readFileSync(path.join(__dirname, '../data/reacts.json'))
 const emojiKeys = Object.keys(reactsData)
 
 module.exports = function reactions(msg, args) {

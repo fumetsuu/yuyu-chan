@@ -1,4 +1,5 @@
-const logger = require('../logger.js')
+const path = require('path')
+const logger = require(path.join(__dirname, '../logger.js'))
 
 module.exports = function prune(msg, args) {
 	var deleteCount

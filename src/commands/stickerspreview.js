@@ -1,16 +1,17 @@
+const path = require('path')
 const fs = require('fs')
-const utils = require('../utils.js')
-const logger = require('../logger.js')
+const utils = require(path.join(__dirname, '../utils.js'))
+const logger = require(path.join(__dirname, '../logger.js'))
 
 module.exports = function stickerspreview(msg, args) {
-	var previewDataPath = './src/stickers/previewData.json'
+	var previewDataPath = path.join(__dirname, '../stickers/previewData.json')
 	logger.info('called', 'trying to call genStickersPreview()')
 	var forceUpdate = false
 	if (args.includes('force=true')) {
 		forceUpdate = true
 	}
 	//store number of stickers in previewInfo.json then check with stickers folder if there is a differing number of stickers
-	var stickersInFolder = fs.readdirSync('./src/stickers/stickerImgs').length
+	var stickersInFolder = fs.readdirSync(path.join(__dirname, '../stickers/stickerImgs')).length
 	fs.readFile(previewDataPath, (err, data) => {
 		var previewData = JSON.parse(data)
 		if (!previewData.stickerCount || previewData.stickerCount != stickersInFolder || forceUpdate) {
@@ -25,7 +26,7 @@ module.exports = function stickerspreview(msg, args) {
 				.then(message => {
 					loadingMsg = message
 				})
-			utils.genStickersPreview('./src/stickers/preview.jpg', (err, file, count) => {
+			utils.genStickersPreview(path.join(__dirname, '../stickers/preview.jpg'), (err, file, count) => {
 				previewData['stickerCount'] = count //update json file
 				previewData['previewFile'] = file
 				logger.success('sending', 'sending new preview')

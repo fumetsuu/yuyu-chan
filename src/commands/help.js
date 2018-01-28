@@ -1,9 +1,9 @@
 const path = require('path')
-const commands = require('./../commands.js')
+const commands = require(path.join(__dirname, '../commands.js'))
 const commandsList = Object.keys(commands)
 commandsList.unshift('help')
-const commandsHelp = require('../commandsHelp.js')
-const logger = require('../logger.js')
+const commandsHelp = require(path.join(__dirname, '../commandsHelp.js'))
+const logger = require(path.join(__dirname, '../logger.js'))
 
 module.exports = function help(msg, args) {
 	if (!args[0]) {

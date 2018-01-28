@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const Jimp = require('jimp')
 const sizeOf = require('image-size')
-const logger = require('./logger.js')
+const logger = require(path.join(__dirname, '/logger.js'))
 const async = require('async')
 
 module.exports = utils = {
@@ -10,8 +10,6 @@ module.exports = utils = {
 		const stickerFolderPath = path.join(__dirname, './stickers/stickerImgs')
 		fs.readdir(stickerFolderPath, (err, files) => {
 			var start = new Date().getTime()
-			files = files.filter(f => !/(.gitignore|stickerMap.json)/.test(f))
-			//want to set 50x50 for each file,  30px padding 15 images each row
 			const scaledDimensions = 90
 			const margin = 60
 			const stickersPerRow = 12

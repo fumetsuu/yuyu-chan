@@ -1,5 +1,6 @@
+const path = require('path')
 const jsonfile = require('jsonfile')
-const numletters = jsonfile.readFileSync('./src/data/numletters.json')
+const numletters = jsonfile.readFileSync(path.join(__dirname, '../data/numletters.json'))
 const nums = Object.keys(numletters)
 
 module.exports = function numbersToLetters(msg, args) {
@@ -12,7 +13,5 @@ module.exports = function numbersToLetters(msg, args) {
 			lettersString += '🤠'
 		}
 	}
-	msg.channel.send(
-		` \`\`\`ntl(${numbersArray.join(' ')}) => ${lettersString}\`\`\` `
-	)
+	msg.channel.send(` \`\`\`ntl(${numbersArray.join(' ')}) => ${lettersString}\`\`\` `)
 }

@@ -1,5 +1,6 @@
+const path = require('path')
 const jsonfile = require('jsonfile')
-const emojidata = jsonfile.readFileSync('./src/data/emojidata.json')
+const emojidata = jsonfile.readFileSync(path.join(__dirname, '../data/emojidata.json'))
 const categories = emojidata.categories
 const MAX_EMOJI = 200
 const argsRegex = /\w+\s\d+/
@@ -62,8 +63,7 @@ module.exports = function emoji(msg) {
 function sendInvalid(msg) {
 	var invalidEmbed = {
 		title: 'Invalid emoji category',
-		description:
-			'try `e/category number` with `category` as one of `people` `nature` `food` `activity` `places` `objects` `symbols` `flags` or leave it blank for a random emoji from all categories, number should be `<=200`',
+		description: 'try `e/category number` with `category` as one of `people` `nature` `food` `activity` `places` `objects` `symbols` `flags` or leave it blank for a random emoji from all categories, number should be `<=200`',
 		color: 6815222,
 		timestamp: `${new Date().toISOString()}`,
 		footer: {
