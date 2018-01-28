@@ -16,10 +16,10 @@ module.exports = function sticker(msg) {
 				stickerFile = stickerFile + '.jpg'
 			}
 		} else {
-			stickerFile = `${__dirname}/../stickers/${stickerFile}`
+			stickerFile = `${__dirname}/../stickers/stickerImgs/${stickerFile}`
 		}
 	} else if (stickerName == '') {
-		var stickerFile = `${__dirname}/../stickers/${stickerMap[stickersList[Math.floor(Math.random() * stickersList.length)]]}`
+		var stickerFile = `${__dirname}/../stickers/stickerImgs/${stickerMap[stickersList[Math.floor(Math.random() * stickersList.length)]]}`
 	} else {
 		var invalidEmbed = {
 			title: "Sticker doesn't exist...",

@@ -6,8 +6,8 @@ const logger = require('./logger.js')
 const async = require('async')
 
 module.exports = utils = {
-	genStickersPreview: function () {
-		const stickerFolderPath = path.join(__dirname, './stickers')
+	genStickersPreview: function() {
+		const stickerFolderPath = path.join(__dirname, './stickers/stickerImgs')
 		fs.readdir(stickerFolderPath, (err, files) => {
 			var start = new Date().getTime()
 			files = files.filter(f => !/(.gitignore|stickerMap.json)/.test(f))
@@ -18,7 +18,7 @@ module.exports = utils = {
 			var templateWidth = (scaledDimensions + margin) * stickersPerRow + margin //extra margin for right
 			var templateHeight = Math.ceil(files.length / stickersPerRow) * (scaledDimensions + margin) + margin //extra margin for bottom
 			var stickerBorder = new Jimp(scaledDimensions, scaledDimensions, 0xffffff00, (err, border) => {
-				const fillBorder = makeIteratorThatFillsWithColor(0x00000022);
+				const fillBorder = makeIteratorThatFillsWithColor(0x000000aa)
 				border.scan(0, 0, scaledDimensions, 1, fillBorder)
 				border.scan(0, scaledDimensions - 1, scaledDimensions, 1, fillBorder)
 				border.scan(0, 0, 1, scaledDimensions, fillBorder)
@@ -31,7 +31,8 @@ module.exports = utils = {
 				var filePath //for scope
 				async.until(
 					() => imgPosCounter == files.length,
-					function (next) { //next is important !! :)
+					function(next) {
+						//next is important !! :)
 						filePath = path.join(stickerFolderPath, files[imgPosCounter])
 						Jimp.read(filePath, (err, img) => {
 							// console.log(files[imgPosCounter], img, imgPosCounter, template)
@@ -49,7 +50,8 @@ module.exports = utils = {
 							imgPosCounter++
 							next()
 						})
-					}, (err, results) => {
+					},
+					(err, results) => {
 						console.log('heyyy')
 						Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
 							for (var i = 0; i < stickerNames.length; i++) {
@@ -60,7 +62,7 @@ module.exports = utils = {
 								var yPixels = margin + withMargin * yPos
 								template.print(font, xPixels + 5, yPixels + scaledDimensions + 2, stickerNames[i])
 							}
-							previewTemplate.write('./ohhhh.jpg', (err, success) => {
+							previewTemplate.write('./src/stickers/preview.jpg', (err, success) => {
 								logger.success('file written', success + ' time taken : ' + (new Date().getTime() - start) + 'ms')
 							})
 						})
@@ -69,10 +71,11 @@ module.exports = utils = {
 			})
 		})
 
-		function makeIteratorThatFillsWithColor(color) { //Jimp #202
-			return function (x, y, offset) {
-				this.bitmap.data.writeUInt32BE(color, offset, true);
+		function makeIteratorThatFillsWithColor(color) {
+			//Jimp #202
+			return function(x, y, offset) {
+				this.bitmap.data.writeUInt32BE(color, offset, true)
 			}
-		};
+		}
 	}
 }

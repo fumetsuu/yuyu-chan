@@ -20,10 +20,10 @@ module.exports = function addsticker(msg, args) {
 		})
 		.on('response', res => {
 			if (/\.(gif)$/.test(stickerURL)) {
-				var newStickerFile = fs.createWriteStream(`./src/stickers/${stickerName}.gif`)
+				var newStickerFile = fs.createWriteStream(`./src/stickers/stickerImgs/${stickerName}.gif`)
 				var filext = 'gif'
 			} else {
-				var newStickerFile = fs.createWriteStream(`./src/stickers/${stickerName}.jpg`)
+				var newStickerFile = fs.createWriteStream(`./src/stickers/stickerImgs/${stickerName}.jpg`)
 				var filext = 'jpg'
 			}
 			res.pipe(newStickerFile)
@@ -56,8 +56,7 @@ module.exports = function addsticker(msg, args) {
 function sendInvalid(msg) {
 	var errorEmbed = {
 		title: "Couldn't add sticker",
-		description:
-			"yuyu chan couldn't add the sticker for some reason... \n make sure that the image is a valid url and that the addsticker command is in the form: ```y/addsticker stickername imageurl``` \n and that the sticker name is valid",
+		description: "yuyu chan couldn't add the sticker for some reason... \n make sure that the image is a valid url and that the addsticker command is in the form: ```y/addsticker stickername imageurl``` \n and that the sticker name is valid",
 		color: 6815222,
 		timestamp: '2018-01-23T22:31:44.056Z',
 		footer: {
