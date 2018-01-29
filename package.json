@@ -7,6 +7,9 @@
 		"start": "nodemon main.js",
 		"forever": "forever start ./forever.config.json"
 	},
+	"engines": {
+		"node": "8.2.1"
+	},
 	"author": "fumetsu",
 	"license": "ISC",
 	"dependencies": {

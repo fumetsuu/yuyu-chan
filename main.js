@@ -22,8 +22,8 @@ client.on('ready', () => {
 })
 
 //handle message and commands
-var config = jsonfile.readFileSync('conf.json')
-client.login(config.token)
+var botToken = jsonfile.readFileSync('conf.json').token || process.env.TOKEN
+client.login(botToken)
 const helpcommand = require(path.join(__dirname, '/src/commands/help.js'))
 const commands = require(path.join(__dirname, '/src/commands.js'))
 const commandsList = Object.keys(commands)
