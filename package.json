@@ -8,7 +8,8 @@
 		"forever": "forever start ./forever.config.json"
 	},
 	"engines": {
-		"node": "8.2.1"
+		"node": "8.x",
+		"npm": "*"
 	},
 	"author": "fumetsu",
 	"license": "ISC",

@@ -8,11 +8,6 @@ const logger = require(path.join(__dirname, '/src/logger.js'))
 
 client.on('ready', () => {
 	logger.log('準備OK!')
-	// logger.info('', '')
-	// logger.err('', '')
-	// logger.warn('', '')
-	// logger.success('', '')
-	// logger.data('', '')
 	client.user.setPresence({
 		game: {
 			name: 'anime',
