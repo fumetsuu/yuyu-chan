@@ -2,7 +2,7 @@ const request = require('request')
 
 module.exports = function(msg, args) {
 	request(
-		'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId=UUAaGaynFpku5cAx6OOSrW-w&key=AIzaSyC3VPFELyVAmx5d6IbIdQ2YM1mcAclzE5k',
+		'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId=UUAaGaynFpku5cAx6OOSrW-w&key=AIzaSyDB8rFWkcqhkdSTlkZr7_tILN-6nmrAKJs',
 		(err, response, body) => {
 			var resultsJSON = JSON.parse(body)
 			var items = resultsJSON.items
