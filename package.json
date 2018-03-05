@@ -32,5 +32,8 @@
 		"node-emoji": "^1.8.1",
 		"request": "^2.83.0",
 		"upper-case": "^1.1.3"
+	},
+	"devDependencies": {
+		"dotenv": "^5.0.1"
 	}
 }

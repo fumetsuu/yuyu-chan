@@ -4,7 +4,7 @@ const path = require('path')
 const Jimp = require('jimp')
 const logger = require('../logger.js')
 
-export default function addsticker(msg, args) {
+module.exports = function addsticker(msg, args) {
 	var stickerName = args[0]
 
 	var stickerURL

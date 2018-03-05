@@ -4,14 +4,15 @@ const fs = require('fs')
 const path = require('path')
 const jsonfile = require('jsonfile')
 const cmdPrefix = /^y\//
+require('dotenv').config()
 const logger = require(path.join(__dirname, '/src/logger.js'))
 
 client.on('ready', () => {
 	logger.log('準備OK!')
 	client.user.setPresence({
 		game: {
-			name: 'anime',
-			type: 'WATCHING'
+			type: 'WATCHING',
+			name: 'anime'
 		}
 	})
 })

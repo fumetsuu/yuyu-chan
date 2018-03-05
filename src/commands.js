@@ -1,6 +1,6 @@
 const path = require('path');
 const sticker = require(path.join(__dirname, '/commands/sticker.js'));
-const addsticker = require(path.join(__dirname, '/commands/addsticker.js'));
+// const addsticker = require(path.join(__dirname, '/commands/addsticker.js'));
 const removesticker = require(path.join(__dirname, '/commands/removesticker.js'));
 const stickerslist = require(path.join(__dirname, '/commands/stickerslist.js'));
 const emoji = require(path.join(__dirname, '/commands/emoji.js'));
@@ -16,7 +16,7 @@ const prune = require(path.join(__dirname, '/commands/prune'));
 
 const commands = {
 	sticker: sticker,
-	addsticker: addsticker,
+	// addsticker: addsticker,
 	removesticker: removesticker,
 	stickerslist: stickerslist,
 	emoji: emoji,
